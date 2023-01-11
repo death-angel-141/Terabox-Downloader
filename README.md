@@ -16,7 +16,7 @@ Install dependencies automatically with pip
 Obtain cookies from your terabox account using the extension provided and place the ```cookies.txt``` file it in the same directory and then execute
 
 ```python
-python terabox.py
+  python terabox.py
 ```
 
 
