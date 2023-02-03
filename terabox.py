@@ -9,7 +9,7 @@ realPath = os.path.realpath(currentFile)
 dirPath = os.path.dirname(realPath)
 dirName = os.path.basename(dirPath)
 aria2c = dirPath + "/binaries/aria2c.exe"
-cookies_file = dirPath + '/cookies.txt'
+cookies_file = dirPath + '/cookies_tb.txt'
 
 
 def parseCookieFile(cookiefile):
@@ -22,26 +22,27 @@ def parseCookieFile(cookiefile):
     return cookies
 
 
-cookies = parseCookieFile('cookies.txt')
+cookies = parseCookieFile('cookies_tb.txt')
 print('Cookies Parsed')
 
 
 inp = input('Enter the Link: ')
+dom = inp.split("/")[2]
 fxl = inp.split("=")
 key = fxl[-1]
 
-URL = f'https://www.terabox.com/share/list?app_id=250528&shorturl={key}&root=1'
+URL = f'https://{dom}/share/list?app_id=250528&shorturl={key}&root=1'
 
 header = {
     'Accept': 'application/json, text/plain, */*',
     'Accept-Language': 'en-US,en;q=0.5',
     'Accept-Encoding': 'gzip, deflate, br',
-    'Referer': f'https://www.terabox.com/sharing/link?surl={key}',
+    'Referer': f'https://{dom}/sharing/link?surl={key}',
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36'
 }
 
-response = requests.get(url=URL, headers=header, cookies=cookies).json()[
+resp = requests.get(url=URL, headers=header, cookies=cookies).json()[
     'list'][0]['dlink']
     
 subprocess.run([aria2c, '--console-log-level=warn', '-x 16',
-               '-s 16', '-j 16', '-k 1M', '--file-allocation=none', response])
+               '-s 16', '-j 16', '-k 1M', '--file-allocation=none', resp])
