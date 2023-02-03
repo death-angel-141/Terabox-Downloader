@@ -22,7 +22,7 @@ def parseCookieFile(cookiefile):
     return cookies
 
 
-cookies = parseCookieFile('cookies_tb.txt')
+cookies = parseCookieFile('cookies.txt')
 print('Cookies Parsed')
 
 
