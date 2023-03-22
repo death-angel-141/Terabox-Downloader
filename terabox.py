@@ -26,7 +26,10 @@ cookies = parseCookieFile('cookies.txt')
 print('Cookies Parsed')
 
 
-inp = input('Enter the Link: ')
+urls = input('Enter the Link: ')
+
+redirects = requests.get(url=urls)
+inp = redirects.url
 dom = inp.split("/")[2]
 fxl = inp.split("=")
 key = fxl[-1]
